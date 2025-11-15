@@ -126,7 +126,30 @@ function initSidebar(sidebarQuery, contentQuery, mode=1) {
             };
         });
     };
-    $("#toc-container").prepend("<strong>文档目录</strong><hr>")
+    // 创建带有眼睛图标的标题容器
+    var tocHeader = $('<div class="toc-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;"></div>');
+    var tocTitle = $('<strong>文档目录</strong>');
+    var toggleIcon = $('<i class="layui-icon layui-icon-eye toc-toggle-icon" style="cursor: pointer; font-size: 18px; color: #999;"></i>');
+
+    tocHeader.append(tocTitle);
+    tocHeader.append(toggleIcon);
+    $("#toc-container").prepend(tocHeader);
+    $("#toc-container").append("<hr>");
+
+    // 添加点击事件控制目录显示/隐藏
+    var tocContentVisible = true;
+    toggleIcon.on('click', function() {
+        tocContentVisible = !tocContentVisible;
+        if (tocContentVisible) {
+            // 显示目录内容
+            $("#toc-container .markdown-toc-list, #toc-container .menu-root").show();
+            $(this).removeClass('layui-icon-eye-invisible').addClass('layui-icon-eye');
+        } else {
+            // 隐藏目录内容
+            $("#toc-container .markdown-toc-list, #toc-container .menu-root").hide();
+            $(this).removeClass('layui-icon-eye').addClass('layui-icon-eye-invisible');
+        }
+    });
 }
 
 

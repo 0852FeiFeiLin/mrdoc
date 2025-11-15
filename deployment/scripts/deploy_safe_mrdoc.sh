@@ -40,7 +40,7 @@ PROJECT_NAME="mrdocs"
 # 获取脚本所在目录的上上级目录 (../../)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")"
-MRDOC_REPO_URL="https://github.com/0852FeiFeiLin/mrdocs.git"
+MRDOC_REPO_URL="https://github.com/0852FeiFeiLin/mrdoc.git"
 MRDOC_BRANCH="master"
 DOMAIN_NAME="localhost"
 

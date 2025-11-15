@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" style="background: #f8f9fa;">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif; font-size: 18px; font-weight: 600; fill: #333; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif; font-size: 14px; fill: #666; }
+      .btn-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif; font-size: 13px; fill: #333; }
+      .note { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif; font-size: 11px; fill: #666; }
+    </style>
+  </defs>
+
+  <!-- 标题 -->
+  <text x="20" y="35" class="title">优化后的分页器设计方案</text>
+
+  <!-- 当前样式（对比） -->
+  <text x="20" y="70" class="label">❌ 当前样式：</text>
+  <g transform="translate(130, 50)">
+    <!-- 上一页 -->
+    <rect x="0" y="0" width="70" height="32" rx="4" fill="#fff" stroke="#ddd"/>
+    <text x="35" y="21" class="btn-text" text-anchor="middle">上一页</text>
+
+    <!-- 1/2 -->
+    <rect x="80" y="0" width="50" height="32" rx="4" fill="#333"/>
+    <text x="105" y="21" class="btn-text" text-anchor="middle" fill="#fff" font-weight="500">1/2</text>
+
+    <!-- 下一页 -->
+    <rect x="140" y="0" width="70" height="32" rx="4" fill="#fff" stroke="#ddd"/>
+    <text x="175" y="21" class="btn-text" text-anchor="middle">下一页</text>
+
+    <!-- 问题标注 -->
+    <text x="220" y="21" font-size="11" fill="#ef4444">← 无法快速到首页/末页</text>
+  </g>
+
+  <!-- 优化后样式 -->
+  <text x="20" y="135" class="label">✅ 优化样式：</text>
+
+  <g transform="translate(20, 115)">
+    <!-- 首页 -->
+    <rect x="110" y="0" width="50" height="36" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="135" y="24" class="btn-text" text-anchor="middle">首页</text>
+
+    <!-- 上一页 -->
+    <rect x="168" y="0" width="50" height="36" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="193" y="24" font-size="18" text-anchor="middle" fill="#333">‹</text>
+
+    <!-- 第1页 (当前页) -->
+    <rect x="226" y="0" width="38" height="36" rx="6" fill="#2563eb" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="245" y="24" class="btn-text" text-anchor="middle" fill="#fff" font-weight="700">1</text>
+
+    <!-- 第2页 -->
+    <rect x="272" y="0" width="38" height="36" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="291" y="24" class="btn-text" text-anchor="middle">2</text>
+
+    <!-- 第3页 -->
+    <rect x="318" y="0" width="38" height="36" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="337" y="24" class="btn-text" text-anchor="middle">3</text>
+
+    <!-- 省略号 -->
+    <text x="374" y="24" font-size="16" text-anchor="middle" fill="#999">...</text>
+
+    <!-- 第10页 (最后一页) -->
+    <rect x="400" y="0" width="44" height="36" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="422" y="24" class="btn-text" text-anchor="middle">10</text>
+
+    <!-- 下一页 -->
+    <rect x="452" y="0" width="50" height="36" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="477" y="24" font-size="18" text-anchor="middle" fill="#333">›</text>
+
+    <!-- 末页 -->
+    <rect x="510" y="0" width="50" height="36" rx="6" fill="#fff" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="535" y="24" class="btn-text" text-anchor="middle">末页</text>
+
+    <!-- 分隔线 -->
+    <line x1="578" y1="8" x2="578" y2="28" stroke="#d0d7de" stroke-width="1.5"/>
+
+    <!-- 每页显示 -->
+    <text x="595" y="24" class="btn-text">每页</text>
+    <rect x="635" y="6" width="65" height="24" rx="4" fill="#fff" stroke="#d0d7de" stroke-width="1.5"/>
+    <text x="655" y="24" class="btn-text" text-anchor="middle">10</text>
+    <text x="685" y="24" font-size="10" fill="#999">▼</text>
+    <text x="710" y="24" class="btn-text">条</text>
+
+    <!-- 跳转到 -->
+    <text x="735" y="24" class="btn-text">跳至</text>
+    <rect x="770" y="6" width="55" height="24" rx="4" fill="#fff" stroke="#d0d7de" stroke-width="1.5"/>
+    <line x1="778" y1="18" x2="817" y2="18" stroke="#ccc" stroke-width="1"/>
+    <text x="835" y="24" class="btn-text">页</text>
+
+    <!-- GO按钮 -->
+    <rect x="860" y="6" width="48" height="24" rx="4" fill="#10b981" stroke="#10b981" stroke-width="1.5"/>
+    <text x="884" y="24" font-size="12" text-anchor="middle" fill="#fff" font-weight="700">GO</text>
+  </g>
+
+  <!-- 特性说明框 -->
+  <rect x="920" y="100" width="250" height="90" rx="8" fill="#fff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="940" y="125" font-size="13" fill="#333" font-weight="600">✨ 新增功能</text>
+  <text x="940" y="145" class="note">✓ 显示首页/末页按钮</text>
+  <text x="940" y="161" class="note">✓ 智能省略号（页数多时）</text>
+  <text x="940" y="177" class="note">✓ 每页数量可选（10/20/50/100）</text>
+
+</svg>

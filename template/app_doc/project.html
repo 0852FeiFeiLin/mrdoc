@@ -33,22 +33,16 @@
     {% load doc_filter %}
     <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title">
-            <li class="layui-this">{% trans "简介" %}</li>
-            <li>{% trans "目录大纲" %}</li>
+            <li class="layui-this">{% trans "目录大纲" %}</li>
+            <li>{% trans "简介" %}</li>
             <li>{% trans "最新文档" %}</li>
             {% if enable_project_report %}
             <li>{% trans "文集下载" %}</li>
             {% endif %}
         </ul>
         <div class="layui-tab-content" style="padding: 0;">
-            <!-- 文集简介 -->
-            <div class="layui-tab-item layui-show">
-                <div id="project-desc">
-                    <textarea style="display: none;">{% if project.intro == '' or project.intro is None %}{% trans "暂无文集简介" %}{% else %}{{project.intro}}{% endif %}
-                </textarea></div>
-            </div>
             <!-- 目录大纲 -->
-            <div class="layui-tab-item">
+            <div class="layui-tab-item layui-show">
                 <ul class="summary" id="doc-tree"></ul>
                 {% if toc_cnt > 999  %}
                 <style>
@@ -61,6 +55,12 @@
                 </style>
                 <div id="project-desc-toc-page" style="text-align: center;"></div>
                 {% endif %}
+            </div>
+            <!-- 文集简介 -->
+            <div class="layui-tab-item">
+                <div id="project-desc">
+                    <textarea style="display: none;">{% if project.intro == '' or project.intro is None %}{% trans "暂无文集简介" %}{% else %}{{project.intro}}{% endif %}
+                </textarea></div>
             </div>
             <!-- 最新文档 -->
             <div class="layui-tab-item">
@@ -243,7 +243,7 @@
             layui.each(tree,function(index,item){
                 toc_str += "<li>"
                 if(item['children'] != undefined){ // 存在二级文档
-                    li = '<div class="project-toc-left"><a href="/doc/'+item.id+'/" title="'+item.title+'">'+item.title+'</a></div><div class="project-toc-right layui-hide-xs">' + util.toDateString(item.modify_time,"yyyy-MM-dd") + '</div>' +'<ul class="sub-menu">'
+                    li = '<div class="project-toc-left"><a href="/doc/'+item.id+'/" title="'+item.title+'">'+item.title+'</a></div><div class="project-toc-right layui-hide-xs">' + util.toDateString(item.modify_time,"yyyy-MM-dd") + '</div>' +'<ul class="sub-menu">' // 默认展开：不添加 toc-close 类
                     toc_str += li
                     toc_str += generate_children_toc(item['children'])
                     toc_str += '</ul>'
@@ -264,12 +264,12 @@
                 layui.each(r.data,function(index,item){
                     toc_str += "<li>"
                     if(item['children'] != undefined){ // 存在二级文档
-                        li = '<div class="project-toc-left"><a href="/project-'+'{{project.id}}'+'/doc-'+item.id+'/" title="'+item.title+'">'+item.title+'</a></div><div class="project-toc-right layui-hide-xs">' + util.toDateString(item.modify_time,"yyyy-MM-dd") + '</div>' +'<ul class="sub-menu">'
+                        li = '<div class="project-toc-left"><a href="/project-'+'{{project.id}}'+'/doc-'+item.id+'/" title="'+item.title+'">'+item.title+'</a></div><div class="project-toc-right layui-hide-xs">' + util.toDateString(item.modify_time,"yyyy-MM-dd") + '</div>' +'<ul class="sub-menu">' // 默认展开：不添加 toc-close 类
                         toc_str += li
                         layui.each(item['children'],function(index,item){// 遍历二级文档
                             toc_str += '<li>'
                             if(item['children'] != undefined){ //存在三级文档
-                                li = '<div class="project-toc-left"><a href="/project-'+'{{project.id}}'+'/doc-'+item.id+'/" title="'+item.title+'">'+item.title+'</a></div><div class="project-toc-right layui-hide-xs">' + util.toDateString(item.modify_time,"yyyy-MM-dd") + '</div>' +'<ul class="sub-menu">'
+                                li = '<div class="project-toc-left"><a href="/project-'+'{{project.id}}'+'/doc-'+item.id+'/" title="'+item.title+'">'+item.title+'</a></div><div class="project-toc-right layui-hide-xs">' + util.toDateString(item.modify_time,"yyyy-MM-dd") + '</div>' +'<ul class="sub-menu">' // 默认展开：不添加 toc-close 类
                                 toc_str += li
                                 layui.each(item['children'],function(index,item){ // 遍历三级文档
                                     li = '<li><div class="project-toc-left"><a href="/project-'+'{{project.id}}'+'/doc-'+item.id+'/" title="'+item.title+'">'+item.title+'</a></div><div class="project-toc-right layui-hide-xs">' + util.toDateString(item.modify_time,"yyyy-MM-dd") + '</div></li>'

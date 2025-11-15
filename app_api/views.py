@@ -585,6 +585,9 @@ def create_doc(request):
     if 'json' in content_type:
         try:
             json_data = json.loads(request.body.decode('utf-8'))
+            # 优先使用GET参数的token，如果GET参数为空，则从JSON body中获取
+            if not token:
+                token = json_data.get('token', '')
             project_id = json_data.get('pid', '')
             doc_title = json_data.get('title', '')
             doc_content = json_data.get('doc', '')
@@ -641,6 +644,9 @@ def modify_doc(request):
     if 'json' in content_type:
         try:
             json_data = json.loads(request.body.decode('utf-8'))
+            # 优先使用GET参数的token，如果GET参数为空，则从JSON body中获取
+            if not token:
+                token = json_data.get('token', '')
             project_id = json_data.get('pid', '')
             doc_id = json_data.get('did', '')
             doc_title = json_data.get('title', '')
@@ -708,6 +714,9 @@ def upload_img(request):
     if 'json' in content_type:
         try:
             json_data = json.loads(request.body.decode('utf-8'))
+            # 优先使用GET参数的token，如果GET参数为空，则从JSON body中获取
+            if not token:
+                token = json_data.get('token', '')
             base64_img = json_data.get('base64', None)
             commom_img = json_data.get('image', None)
         except json.JSONDecodeError:
@@ -784,6 +793,9 @@ def delete_doc(request):
     if 'json' in content_type:
         try:
             json_data = json.loads(request.body.decode('utf-8'))
+            # 优先使用GET参数的token，如果GET参数为空，则从JSON body中获取
+            if not token:
+                token = json_data.get('token', '')
             doc_id = json_data.get('did', '')
         except json.JSONDecodeError:
             return JsonResponse({'data': 'Invalid JSON data', 'status': False})

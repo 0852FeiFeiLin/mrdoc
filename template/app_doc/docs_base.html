@@ -129,17 +129,11 @@
                     {% if docs.children %}
                         <div style="display:flex;justify-content:space-between;">
                             <a href="{% url 'doc_id' doc_id=docs.id %}" title="{{docs.name}}">{% if docs.editor_mode == 4 %}<i class="layui-icon layui-icon-table"></i>{% else %}<i class="iconfont mrdoc-icon-wendang"></i>{% endif %} {{ docs.name }}</a>
-                            {% if docs.open_children %}
-                                <i class="layui-icon layui-icon-down switch-toc"></i>
-                            {% else %}
-                                <i class="layui-icon layui-icon-left switch-toc"></i>
-                            {% endif %}
+                            <!-- 默认展开：始终显示向下箭头 -->
+                            <i class="layui-icon layui-icon-down switch-toc"></i>
                         </div>
-                        {% if docs.open_children %}
-                            <ul class="sub-menu">
-                        {% else %}
-                            <ul class="sub-menu toc-close">
-                        {% endif %}
+                        <!-- 默认全部展开：始终不添加 toc-close 类 -->
+                        <ul class="sub-menu">
 
                         <!-- 二级目录 -->
                         {% for node in docs.children %}
@@ -147,17 +141,11 @@
                                 {% if node.id|get_next_doc %}
                                     <div style="display:flex;justify-content:space-between;">
                                         <a href="{% url 'doc_id' doc_id=node.id %}" title="{{node.name}}"><i class="{% if node.editor_mode == 4 %}layui-icon layui-icon-table {% else %}iconfont mrdoc-icon-wendang{% endif %}"></i> {{ node.name }}</a>
-                                        {% if node.open_children %}
-                                            <i class="layui-icon layui-icon-down switch-toc"></i>
-                                        {% else %}
-                                            <i class="layui-icon layui-icon-left switch-toc"></i>
-                                        {% endif %}
+                                        <!-- 默认展开：始终显示向下箭头 -->
+                                        <i class="layui-icon layui-icon-down switch-toc"></i>
                                     </div>
-                                    {% if node.open_children %}
-                                        <ul class="sub-menu">
-                                    {% else %}
-                                        <ul class="sub-menu toc-close">
-                                    {% endif %}
+                                    <!-- 默认全部展开：始终不添加 toc-close 类 -->
+                                    <ul class="sub-menu">
 
                                     <!-- 三级目录 -->
                                     {% for doc in node.children %}
@@ -338,9 +326,9 @@
                         '">' +
                         '<i class="iconfont mrdoc-icon-wendang"></i>&nbsp' +
                         item.title+'</a>' +
-                        '<i class="layui-icon layui-icon-left switch-toc" style="padding:15px;"></i>'+
+                        '<i class="layui-icon layui-icon-down switch-toc" style="padding:15px;"></i>'+ // 默认展开：显示向下箭头
                     '</div>'+
-                    '<ul class="sub-menu toc-close">'
+                    '<ul class="sub-menu">' // 默认展开：不添加 toc-close 类
                     toc_str += li
                     toc_str += getProjectToc(item['children'])
                     toc_str += '</ul>'

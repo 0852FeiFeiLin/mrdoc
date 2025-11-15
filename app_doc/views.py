@@ -342,7 +342,16 @@ def project_list(request):
             return render(request,'404.html')
 
     # 分页处理
-    paginator = Paginator(project_list, 12)
+    page_size = request.GET.get('page_size', 12)  # 获取每页显示数量，默认为12
+    try:
+        page_size = int(page_size)
+        # 限制page_size的范围，防止恶意请求
+        if page_size not in [12, 24, 48, 96]:
+            page_size = 12
+    except:
+        page_size = 12
+
+    paginator = Paginator(project_list, page_size)
     page = request.GET.get('page', 1)
     try:
         projects = paginator.page(page)
@@ -350,7 +359,11 @@ def project_list(request):
         projects = paginator.page(1)
     except EmptyPage:
         projects = paginator.page(paginator.num_pages)
-    return render(request, 'app_doc/pro_list.html', locals())
+
+    # 确保page_size传递到模板
+    context = locals()
+    context['page_size'] = page_size
+    return render(request, 'app_doc/pro_list.html', context)
 
 
 # 创建文集

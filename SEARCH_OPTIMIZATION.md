@@ -553,7 +553,7 @@ python manage.py shell
 - 搜索引擎原理: 《信息检索导论》
 
 ### 8.3 联系方式
-- GitHub Issues: https://github.com/0852FeiFeiLin/mrdocs/issues
+- GitHub Issues: https://github.com/0852FeiFeiLin/mrdoc/issues
 - 技术支持: 通过 MrDoc 系统内部工单
 
 ---
