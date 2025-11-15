@@ -604,10 +604,10 @@ def create_doc(request):
     try:
         # 验证Token
         token = UserToken.objects.get(token=token)
-        # 文集是否属于用户
-        is_project = Project.objects.filter(create_user=token.user,id=project_id)
-        # 新建文档
-        if is_project.exists():
+        # 用户有浏览和新增权限的文集列表
+        view_list = read_add_projects(token.user)
+        # 检查用户是否有权限在该文集下创建文档
+        if int(project_id) in view_list:
             if int(editor_mode) == 1 or int(editor_mode) == 2:
                 doc = Doc.objects.create(
                     name=doc_title,  # 文档内容
@@ -626,12 +626,18 @@ def create_doc(request):
                     parent_doc=parent_doc,  # 上级文档
                     create_user=token.user  # 创建的用户
                 )
+            else:
+                return JsonResponse({'status': False, 'data': _('不支持的编辑器类型')})
             return JsonResponse({'status': True, 'data': doc.id})
         else:
-            return JsonResponse({'status':False,'data':_('非法请求')})
+            logger.warning(f"用户{token.user.username}尝试在文集{project_id}创建文档，但无权限。可访问文集列表: {view_list}")
+            return JsonResponse({'status':False,'data':_('无权限访问该文集')})
     except ObjectDoesNotExist:
         return JsonResponse({'status': False, 'data': _('token无效')})
-    except:
+    except ValueError as e:
+        logger.exception(_("token创建文档参数异常"))
+        return JsonResponse({'status': False, 'data': str(e)})
+    except Exception as e:
         logger.exception(_("token创建文档异常"))
         return JsonResponse({'status':False,'data':_('系统异常')})
 
