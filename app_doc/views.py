@@ -1086,6 +1086,17 @@ def doc(request,pro_id,doc_id):
                 is_share = True
             except ObjectDoesNotExist:
                 is_share = False
+
+            # 计算当前文档在文集中的序号和总数（用于分页导航）
+            all_docs = Doc.objects.filter(top_doc=pro_id, status=1).order_by('sort', 'create_time')
+            doc_list = list(all_docs.values_list('id', flat=True))
+            try:
+                doc_index = doc_list.index(int(doc_id)) + 1  # 当前文档序号（从1开始）
+                doc_total = len(doc_list)  # 文集总文档数
+            except ValueError:
+                doc_index = 1
+                doc_total = 1
+
             # 获取文集下一级文档
             # project_docs = Doc.objects.filter(top_doc=doc.top_doc, parent_doc=0, status=1).order_by('sort')
             return render(request,'app_doc/doc.html',locals())
@@ -1179,6 +1190,18 @@ def doc_id(request,doc_id):
             is_share = True
         except ObjectDoesNotExist:
             is_share = False
+
+        # 计算当前文档在文集中的序号和总数（用于分页导航）
+        pro_id = doc.top_doc
+        all_docs = Doc.objects.filter(top_doc=pro_id, status=1).order_by('sort', 'create_time')
+        doc_list = list(all_docs.values_list('id', flat=True))
+        try:
+            doc_index = doc_list.index(int(doc_id)) + 1  # 当前文档序号（从1开始）
+            doc_total = len(doc_list)  # 文集总文档数
+        except ValueError:
+            doc_index = 1
+            doc_total = 1
+
         return render(request,'app_doc/doc.html',locals())
     except Exception as e:
         logger.exception(_("文集浏览出错"))
